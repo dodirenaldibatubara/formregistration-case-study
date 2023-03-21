@@ -1,6 +1,6 @@
 const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   // ini yang di tambah
-  publicPath: "/intern-test/",
+  publicPath: "/formregistration-case-study/",
   transpileDependencies: true,
 });
