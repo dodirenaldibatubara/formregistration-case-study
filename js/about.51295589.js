@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkformregistration"]=self["webpackChunkformregistration"]||[]).push([[443],{5399:function(t,n,r){r.r(n),r.d(n,{default:function(){return l}});var s=function(){var t=this;t._self._c;return t._m(0)},u=[function(){var t=this,n=t._self._c;return n("div",{staticClass:"about"},[n("h1",[t._v("This is an about page")])])}],e=r(1001),i={},a=(0,e.Z)(i,s,u,!1,null,null,null),l=a.exports}}]);
+//# sourceMappingURL=about.51295589.js.map
