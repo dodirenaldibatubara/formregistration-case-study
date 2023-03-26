@@ -7,7 +7,7 @@
 
           <select v-model="form.selected_country" v-on:change="saveSelectedCountry($event)" name="" id="" class="border rounded-md h-10 w-full px-2">
             <option value="">Select Country</option>
-            <!-- ingat!! :Value di sini untuk mendapatkan data dari item yang di looping yaitu data dari country -->
+            <!-- ingat!! :Value di sini untuk mendapatkan data dari item yang di looping yaitu data dari country this.country di sini berasal dari props yang udah di get di halaman sebellumnya -->
             <option v-for="(item, index) in this.country" :key="index" :value="item">{{ item.name }}</option>
           </select>
           <span v-if="!$v.form.selected_country.required && $v.form.selected_country.$dirty" class="text-red-500">Selected country is required!</span>
@@ -64,7 +64,7 @@
 import { required } from "vuelidate/lib/validators";
 export default {
   name: "addressData",
-  props: ["country", "inputCountry"],
+  props: ["country", "inputCountry", "countryName", "stateName", "cityName", "addressProps", "postalCodeProps", "selectedCountryProps", "selectedStateProps", "cityIdProps", "selectedCityProps"],
   data() {
     return {
       country_name: null,
@@ -75,8 +75,8 @@ export default {
 
       state: null,
       city: null,
-      stateId: null,
-      cityId: null,
+      // stateId: null,
+      // cityId: null,
       form: {
         selected_country: null,
         selected_state: null,
@@ -121,7 +121,7 @@ export default {
       this.city = null;
       console.log(this.form.selected_country.name);
       console.log(this.form.selected_country.id);
-      this.countryId = this.form.selected_country.id;
+      // this.countryId = this.form.selected_country.id;
       this.country_name = this.form.selected_country.name;
       this.getDataState();
     },
@@ -138,10 +138,9 @@ export default {
     saveSelectedState() {
       // di bawah ini di buat null agar saat user mengganti state maka citynya akan mulai kosong lagi
       this.city = null;
-      // console.log(this.form.selected_state);
-      console.log(this.state_name);
-      console.log(this.stateId);
-      this.stateId = this.form.selected_state.id;
+      // console.log(this.state_name);
+      // console.log(this.stateId);
+      // this.stateId = this.form.selected_state.id;
       this.state_name = this.form.selected_state.name;
       this.getDataCity();
     },
@@ -157,8 +156,61 @@ export default {
     saveSelectedCity() {
       console.log(this.city_name);
       console.log(this.cityId);
-      this.cityId = this.form.selected_city.id;
+      // this.cityId = this.form.selected_city.id;
       this.city_name = this.form.selected_city.name;
+    },
+  },
+  mounted() {
+    // ini di gunakan untuk mengambil data dari app. vue untuk dijadikan default value saat back page.
+    // this.form.selected_country = this.selectedCountryProps;
+    // this.form.selected_state = this.selectedStateProps;
+    // this.form.selected_state = this.stateName;
+    // this.form.selected_city = this.cityName;
+    this.address = this.addressProps;
+    this.postal_code = this.postalCodeProps;
+
+    this.getDataState();
+    this.getDataCity();
+  },
+  watch: {
+    selectedCountryProps: {
+      immediate: true,
+      handler(newValue) {
+        if (newValue) {
+          this.form.selected_country = newValue;
+          this.form.selected_state = this.selectedStateProps;
+          this.form.selected_city = this.selectedCityProps;
+        }
+      },
+    },
+    selectedStateProps: {
+      immediate: true,
+      handler(newValue) {
+        if (newValue) {
+          this.form.selected_state = newValue;
+          this.form.selected_city = this.selectedCityProps;
+        }
+      },
+    },
+    selectedCityProps: {
+      immediate: true,
+      handler(newValue) {
+        if (newValue) {
+          // this.form.selected_city = newValue;
+          this.form.selected_city = this.selectedCityProps;
+        }
+      },
+    },
+  },
+  computed: {
+    countryId() {
+      return this.form.selected_country?.id;
+    },
+    stateId() {
+      return this.form.selected_state?.id;
+    },
+    cityId() {
+      return this.form.selected_city?.id;
     },
   },
 };

@@ -6,6 +6,7 @@
           <div class="w-full">
             <h3 class="font-bold text-start">First name</h3>
             <input type="text" class="border rounded-md h-8 px-4 w-full" v-model="form.first_name" placeholder="First name" />
+
             <span v-if="!$v.form.first_name.required && $v.form.first_name.$dirty" class="text-red-500">Name is required!</span>
           </div>
           <div class="w-full">
@@ -116,9 +117,10 @@
 import { required, minLength, email, sameAs } from "vuelidate/lib/validators";
 export default {
   name: "userData",
-  props: ["password", "country"],
+  props: ["password", "country", "firstName", "lastName", "email", "callingCode", "lastPhoneNumber", "dateOfBirth", "confirmPassword"],
   data() {
     return {
+      firstNamePlaceHolder: null,
       showDate: false,
       showPassword: false,
       inputTypePassword: "password",
@@ -209,6 +211,18 @@ export default {
       console.log("coba");
       this.inputTypeConfirmPassword = this.inputTypeConfirmPassword === "password" ? "text" : "password";
     },
+  },
+
+  mounted() {
+    // ini di gunakan untuk mengambil data dari app. vue untuk dijadikan default value saat back page.
+    this.form.first_name = this.firstName;
+    this.form.last_name = this.lastName;
+    this.form.email = this.email;
+    this.form.calling_code = this.callingCode;
+    this.form.last_phone_number = this.lastPhoneNumber;
+    this.form.date_of_birth = this.dateOfBirth;
+    this.form.password = this.password;
+    this.form.confirm_password = this.confirmPassword;
   },
   computed: {},
 };

@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <!-- cek gambar -->
-
     <!-- <div>
       <img :src="idImage" alt="" />
     </div>
@@ -12,13 +11,42 @@
     <active-component v-if="this.successApp == false" :userData="userData" :addressData="addressData" :documentApp="documentApp"></active-component>
 
     <!-- USER DATA -->
-    <user-data v-if="this.userData == true" ref="userDataComponent" v-on:nextToDataAddress="nextToDataAddress" :password="this.password" :country="country"></user-data>
+    <user-data
+      :firstName="firstName"
+      :lastName="lastName"
+      :email="email"
+      :callingCode="callingCode"
+      :lastPhoneNumber="lastPhoneNumber"
+      :dateOfBirth="dateOfBirth"
+      :password="this.password"
+      :confirmPassword="confirmPassword"
+      v-if="this.userData == true"
+      ref="userDataComponent"
+      v-on:nextToDataAddress="nextToDataAddress"
+      :country="country"
+    ></user-data>
 
     <!-- ADDRESS DATA -->
-    <address-data ref="addressDataComponent" :country="country" v-on:nextToDocument="nextToDocument" v-on:backToUserData="backToUserData" v-if="this.addressData == true" class="mb-40"></address-data>
+    <address-data
+      ref="addressDataComponent"
+      :selectedCountryProps="selectedCountry"
+      :selectedStateProps="selectedState"
+      :selectedCityProps="selectedCity"
+      :countryName="countryName"
+      :stateName="stateName"
+      :cityName="cityName"
+      :cityIdProps="cityId"
+      :addressProps="address"
+      :postalCodeProps="postalCode"
+      :country="country"
+      v-on:nextToDocument="nextToDocument"
+      v-on:backToUserData="backToUserData"
+      v-if="this.addressData == true"
+      class="mb-40"
+    ></address-data>
 
     <!-- Document -->
-    <document-app ref="documentComponent" v-if="this.documentApp == true" v-on:backToAddressData="backToAddressData" v-on:finish="finish"></document-app>
+    <document-app ref="documentComponent" :idImage="idImage" :imageSelfie="imageSelfie" v-if="this.documentApp == true" v-on:backToAddressData="backToAddressData" v-on:finish="finish"></document-app>
 
     <!-- Success -->
     <success-app v-if="successApp == true"></success-app>
@@ -55,10 +83,14 @@ export default {
       // Data User Component
 
       // Data Address Component
+      selectedCountry: null,
+      selectedState: null,
+      selectedCity: null,
       countryName: null,
       stateName: null,
       cityName: null,
       address: null,
+      cityId: null,
       postalCode: null,
       // Data Address Component
 
@@ -113,11 +145,16 @@ export default {
     },
     nextToDocument() {
       console.log(this.$refs.addressDataComponent);
+      this.selectedCountry = this.$refs.addressDataComponent.form.selected_country;
+      this.selectedState = this.$refs.addressDataComponent.form.selected_state;
+      this.selectedCity = this.$refs.addressDataComponent.form.selected_city;
       this.countryName = this.$refs.addressDataComponent.country_name;
       this.stateName = this.$refs.addressDataComponent.state_name;
       this.cityName = this.$refs.addressDataComponent.city_name;
       this.address = this.$refs.addressDataComponent.address;
       this.postalCode = this.$refs.addressDataComponent.postal_code;
+      this.cityId = this.$refs.addressDataComponent.cityId;
+
       // show and hide component
       this.documentApp = true;
       this.addressData = false;

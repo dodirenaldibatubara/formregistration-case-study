@@ -55,7 +55,7 @@
 import { required } from "vuelidate/lib/validators";
 export default {
   name: "document-app",
-  props: [],
+  props: ["idImage", "imageSelfie"],
   data() {
     return {
       previewImg: null,
@@ -169,5 +169,10 @@ export default {
       this.previewSelfie = URL.createObjectURL(this.form.selfie_image);
     },
   },
-};
+  mounted() {
+    // ini di gunakan untuk mengambil data dari app. vue untuk dijadikan default value saat back page.
+    this.previewImg = this.idImage;
+    this.previewSelfie = this.imageSelfie;
+  },
+};  
 </script>
