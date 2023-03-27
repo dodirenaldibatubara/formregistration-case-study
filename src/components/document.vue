@@ -174,5 +174,5 @@ export default {
     this.previewImg = this.idImage;
     this.previewSelfie = this.imageSelfie;
   },
-};  
+};
 </script>

@@ -49,7 +49,24 @@
     <document-app ref="documentComponent" :idImage="idImage" :imageSelfie="imageSelfie" v-if="this.documentApp == true" v-on:backToAddressData="backToAddressData" v-on:finish="finish"></document-app>
 
     <!-- Success -->
-    <success-app v-if="successApp == true"></success-app>
+    <success-app
+      :firstName="firstName"
+      :lastName="lastName"
+      :email="email"
+      :callingCode="callingCode"
+      :lastPhoneNumber="lastPhoneNumber"
+      :dateOfBirth="dateOfBirth"
+      :password="this.password"
+      :confirmPassword="confirmPassword"
+      :countryName="countryName"
+      :stateName="stateName"
+      :cityName="cityName"
+      :addressProps="address"
+      :postalCodeProps="postalCode"
+      :idImage="idImage"
+      :imageSelfie="imageSelfie"
+      v-if="successApp == true"
+    ></success-app>
   </div>
 </template>
 
