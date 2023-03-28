@@ -168,6 +168,10 @@ export default {
     // this.form.selected_city = this.cityName;
     this.address = this.addressProps;
     this.postal_code = this.postalCodeProps;
+    // ini di tambah ke tiganya agar tidak hilang saat balik dari halaman document data tetap tersimpan di app.vue.
+    this.country_name = this.selectedCountryProps.name;
+    this.state_name = this.selectedStateProps.name;
+    this.city_name = this.selectedCityProps.name;
 
     this.getDataState();
     this.getDataCity();
@@ -178,6 +182,10 @@ export default {
       handler(newValue) {
         if (newValue) {
           this.form.selected_country = newValue;
+          this.form.selected_state = this.selectedStateProps;
+          this.form.selected_city = this.selectedCityProps;
+        } else {
+          this.form.selected_country = this.selectedCountryProps;
           this.form.selected_state = this.selectedStateProps;
           this.form.selected_city = this.selectedCityProps;
         }
